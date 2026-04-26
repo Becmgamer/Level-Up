@@ -5,129 +5,114 @@
 <title>Level Up Cubos</title>
 
 <style>
-body {
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
-  text-align: center;
-}
-
-h1 { color: #38bdf8; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding: 10px;
-}
-
-.produto {
-  border: 1px solid #38bdf8;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-button {
-  background: #38bdf8;
-  border: none;
-  padding: 8px;
-  border-radius: 6px;
-  margin-top: 5px;
-}
-
-#carrinho {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: black;
-  padding: 10px;
-}
+body { margin:0; font-family:Arial; background:#0f172a; color:white; }
+header { background:#020617; padding:15px; text-align:center; }
+.grid { display:grid; grid-template-columns: repeat(2,1fr); gap:15px; padding:15px; }
+.produto { background:#020617; padding:10px; border-radius:10px; text-align:center; }
+.produto img { width:100%; border-radius:10px; }
+button { background:#38bdf8; border:none; padding:8px; margin-top:5px; border-radius:6px; }
+#carrinho { position:fixed; right:0; top:0; width:300px; height:100%; background:#020617; padding:10px; overflow:auto; }
+.item { border-bottom:1px solid gray; padding:5px; }
+#login { text-align:center; margin-top:50px; }
 </style>
 </head>
 
 <body>
 
-<h1>🔥 Level Up Cubos</h1>
+<header>🔥 Level Up Cubos</header>
 
-<button onclick="abrirKit()">Montar meu Kit</button>
+<div id="login">
+<input id="email" placeholder="Email"><br><br>
+<input id="senha" type="password" placeholder="Senha"><br><br>
+<button onclick="entrar()">Entrar</button>
+</div>
 
-<h2>Catálogo</h2>
+<div id="loja" style="display:none">
 
 <div class="grid">
 
 <div class="produto">
+<img src="Linkdaimagemaqui">
 <p>Cubo Básico</p>
-<p>R$ 21.99</p>
-<button onclick="addCarrinho('Cubo Básico',21.99)">Adicionar</button>
-<button onclick="comprarDireto('Cubo Básico',21.99)">Comprar</button>
+<p>R$21.99</p>
+<button onclick="add('Cubo Básico',21.99)">Adicionar</button>
 </div>
 
 <div class="produto">
+<img src="Linkdaimagemaqui">
 <p>Cubo Magnético</p>
-<p>R$ 59.90</p>
-<button onclick="addCarrinho('Cubo Magnético',59.90)">Adicionar</button>
-<button onclick="comprarDireto('Cubo Magnético',59.90)">Comprar</button>
+<p>R$59.90</p>
+<button onclick="add('Cubo Magnético',59.90)">Adicionar</button>
+</div>
+
 </div>
 
 </div>
 
 <div id="carrinho">
-🛒 Carrinho: R$ <span id="total">0</span>
+<h2>🛒 Carrinho</h2>
+<div id="itens"></div>
+
+<h3>Total: R$ <span id="total">0</span></h3>
+
+<h3>Pagamento</h3>
+<select id="pagamento">
+<option>Pix</option>
+<option>Presencial</option>
+</select>
+
+<br><br>
+<input id="whats" placeholder="WhatsApp"><br><br>
+<input id="data" placeholder="Data"><br><br>
+
 <button onclick="finalizar()">Finalizar</button>
 </div>
 
 <script>
 
-let carrinho = []
-let total = 0
+let carrinho = [];
+let total = 0;
 
-function addCarrinho(nome, preco){
-  carrinho.push({nome, preco})
-  total += preco
-  atualizar()
+// LOGIN SIMPLES (SEM FIREBASE)
+function entrar(){
+  document.getElementById("login").style.display="none";
+  document.getElementById("loja").style.display="block";
 }
 
+// ADD
+function add(nome, preco){
+  carrinho.push({nome, preco});
+  total += preco;
+  atualizar();
+}
+
+// ATUALIZAR
 function atualizar(){
-  document.getElementById("total").innerText = total.toFixed(2)
+  let html = "";
+  carrinho.forEach((item, i)=>{
+    html += `
+    <div class="item">
+      ${item.nome} - R$ ${item.preco}
+      <button onclick="remover(${i})">❌</button>
+    </div>`;
+  });
+  document.getElementById("itens").innerHTML = html;
+  document.getElementById("total").innerText = total.toFixed(2);
 }
 
-function comprarDireto(nome, preco){
-  carrinho = [{nome, preco}]
-  total = preco
-  finalizar()
+// REMOVER
+function remover(i){
+  total -= carrinho[i].preco;
+  carrinho.splice(i,1);
+  atualizar();
 }
 
-function abrirKit(){
-  let cubo = prompt("Escolha cubo: Basico ou Magnetico")
-  let bag = prompt("Bag: Sim ou Não")
-  let stand = prompt("Stand: Sim ou Não")
-
-  total = 0
-
-  if(cubo=="Basico") total+=21.99
-  if(cubo=="Magnetico") total+=59.90
-  if(bag=="Sim") total+=10
-  if(stand=="Sim") total+=5
-
-  // desconto
-  if(cubo && bag=="Sim" && stand=="Sim"){
-    total *= 0.95
-    alert("Desconto de 5% aplicado!")
-  }
-
-  atualizar()
-}
-
+// FINALIZAR
 function finalizar(){
-  let metodo = prompt("Pagamento: Pix ou Presencial")
-
-  if(metodo=="Pix"){
-    alert("Pix: 000.000.000-00\nValor: R$ "+total.toFixed(2))
-  }
-
-  let data = prompt("Agendar entrega (DD/MM)")
-
-  alert("Pedido realizado!\nValor: R$ "+total.toFixed(2)+"\nData: "+data+"\nEntraremos em contato no WhatsApp.")
+  alert("Pedido enviado!\nTotal: R$ "+total.toFixed(2));
+  carrinho = [];
+  total = 0;
+  atualizar();
 }
 
 </script>
