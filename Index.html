@@ -1,57 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Level Up Cubos</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #0f172a;
-      color: white;
-    }
+<meta charset="UTF-8">
+<title>Level Up Cubos</title>
 
-    h1 {
-      color: #38bdf8;
-    }
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
 
-    .produto {
-      border: 1px solid #38bdf8;
-      margin: 10px;
-      padding: 10px;
-      border-radius: 10px;
-    }
+h1 { color: #38bdf8; }
 
-    button {
-      background: #38bdf8;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.produto {
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+button {
+  background: #38bdf8;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+#carrinho {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: black;
+  padding: 10px;
+}
+</style>
 </head>
 
 <body>
 
 <h1>🔥 Level Up Cubos</h1>
 
-<button onclick="alert('Em breve!')">
-Montar meu Kit
-</button>
+<button onclick="abrirKit()">Montar meu Kit</button>
 
-<h2>Produtos</h2>
+<h2>Catálogo</h2>
+
+<div class="grid">
 
 <div class="produto">
-  <p>Cubo 3x3 Básico</p>
-  <p>R$ 21,99</p>
-  <button onclick="alert('Adicionado!')">Comprar</button>
+<p>Cubo Básico</p>
+<p>R$ 21.99</p>
+<button onclick="addCarrinho('Cubo Básico',21.99)">Adicionar</button>
+<button onclick="comprarDireto('Cubo Básico',21.99)">Comprar</button>
 </div>
 
 <div class="produto">
-  <p>Cubo Magnético Pro</p>
-  <p>R$ 59,90</p>
-  <button onclick="alert('Adicionado!')">Comprar</button>
+<p>Cubo Magnético</p>
+<p>R$ 59.90</p>
+<button onclick="addCarrinho('Cubo Magnético',59.90)">Adicionar</button>
+<button onclick="comprarDireto('Cubo Magnético',59.90)">Comprar</button>
 </div>
+
+</div>
+
+<div id="carrinho">
+🛒 Carrinho: R$ <span id="total">0</span>
+<button onclick="finalizar()">Finalizar</button>
+</div>
+
+<script>
+
+let carrinho = []
+let total = 0
+
+function addCarrinho(nome, preco){
+  carrinho.push({nome, preco})
+  total += preco
+  atualizar()
+}
+
+function atualizar(){
+  document.getElementById("total").innerText = total.toFixed(2)
+}
+
+function comprarDireto(nome, preco){
+  carrinho = [{nome, preco}]
+  total = preco
+  finalizar()
+}
+
+function abrirKit(){
+  let cubo = prompt("Escolha cubo: Basico ou Magnetico")
+  let bag = prompt("Bag: Sim ou Não")
+  let stand = prompt("Stand: Sim ou Não")
+
+  total = 0
+
+  if(cubo=="Basico") total+=21.99
+  if(cubo=="Magnetico") total+=59.90
+  if(bag=="Sim") total+=10
+  if(stand=="Sim") total+=5
+
+  // desconto
+  if(cubo && bag=="Sim" && stand=="Sim"){
+    total *= 0.95
+    alert("Desconto de 5% aplicado!")
+  }
+
+  atualizar()
+}
+
+function finalizar(){
+  let metodo = prompt("Pagamento: Pix ou Presencial")
+
+  if(metodo=="Pix"){
+    alert("Pix: 000.000.000-00\nValor: R$ "+total.toFixed(2))
+  }
+
+  let data = prompt("Agendar entrega (DD/MM)")
+
+  alert("Pedido realizado!\nValor: R$ "+total.toFixed(2)+"\nData: "+data+"\nEntraremos em contato no WhatsApp.")
+}
+
+</script>
 
 </body>
 </html>
