@@ -2,18 +2,141 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Level Up</title>
+<title>Level Up Cubos</title>
 
 <style>
-body { margin:0; font-family:Arial; background:#0f172a; color:white; }
-header { background:#020617; padding:15px; text-align:center; }
-.grid { display:grid; grid-template-columns: repeat(2,1fr); gap:15px; padding:15px; }
-.produto { background:#020617; padding:10px; border-radius:10px; text-align:center; }
-.produto img { width:100%; border-radius:10px; }
-button { background:#38bdf8; border:none; padding:8px; margin-top:5px; border-radius:6px; }
-#carrinho { position:fixed; right:0; top:0; width:300px; height:100%; background:#020617; padding:10px; overflow:auto; }
-.item { border-bottom:1px solid gray; padding:5px; }
-#login { text-align:center; margin-top:50px; }
+body {
+  margin:0;
+  font-family:Arial;
+  background:#0f172a;
+  color:white;
+}
+
+/* HEADER */
+header {
+  background:#020617;
+  padding:20px;
+  text-align:center;
+  font-size:24px;
+  border-bottom:2px solid #38bdf8;
+}
+
+/* GRID */
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+/* PRODUTO */
+.produto {
+  background:#020617;
+  padding:15px;
+  border-radius:15px;
+  transition:0.3s;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+.produto:hover {
+  transform:scale(1.03);
+  box-shadow:0 0 15px #38bdf8;
+}
+
+.produto img {
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.preco {
+  color:#38bdf8;
+  font-weight:bold;
+  font-size:18px;
+}
+
+/* BOTÃO */
+button {
+  background:#38bdf8;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  width:100%;
+  margin-top:10px;
+}
+
+button:hover {
+  background:#0ea5e9;
+}
+
+/* CARRINHO */
+#carrinho {
+  position:fixed;
+  right:0;
+  top:0;
+  width:320px;
+  height:100%;
+  background:#020617;
+  padding:15px;
+  border-left:2px solid #38bdf8;
+  display:flex;
+  flex-direction:column;
+}
+
+#itens {
+  flex:1;
+  overflow:auto;
+}
+
+.item {
+  border-bottom:1px solid #333;
+  padding:8px 0;
+  display:flex;
+  justify-content:space-between;
+}
+
+/* INPUT */
+input, select {
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:none;
+  margin-top:5px;
+}
+
+/* BOTÃO TERMOS */
+#termosBtn {
+  margin-top:10px;
+  background:#1e293b;
+}
+
+/* MODAL TERMOS */
+#modal {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+}
+
+#modalContent {
+  background:#020617;
+  padding:20px;
+  width:80%;
+  max-width:600px;
+  border-radius:10px;
+}
+
+#fechar {
+  margin-top:10px;
+  background:red;
+}
 </style>
 </head>
 
@@ -21,37 +144,29 @@ button { background:#38bdf8; border:none; padding:8px; margin-top:5px; border-ra
 
 <header>🔥 Level Up Cubos</header>
 
-<div id="login">
-<input id="email" placeholder="Email"><br><br>
-<input id="senha" type="password" placeholder="Senha"><br><br>
-<button onclick="entrar()">Entrar</button>
-</div>
-
-<div id="loja" style="display:none">
-
 <div class="grid">
 
 <div class="produto">
-<img src="https://i.postimg.cc/KcH2Ps1v/images-(2).jpg">
-   Esta div tem 300px de largura e 300px de altura.
-<p>Cubo Básico</p>
-<p>R$21.99</p>
+<img src="https://via.placeholder.com/300">
+<h3>Cubo Básico</h3>
+<p class="preco">R$21.99</p>
 <button onclick="add('Cubo Básico',21.99)">Adicionar</button>
 </div>
 
 <div class="produto">
-<img src="Linkdaimagemaqui">
-<p>Cubo Magnético</p>
-<p>R$59.90</p>
+<img src="https://via.placeholder.com/300">
+<h3>Cubo Magnético</h3>
+<p class="preco">R$59.90</p>
 <button onclick="add('Cubo Magnético',59.90)">Adicionar</button>
 </div>
 
 </div>
 
-</div>
-
+<!-- CARRINHO -->
 <div id="carrinho">
+
 <h2>🛒 Carrinho</h2>
+
 <div id="itens"></div>
 
 <h3>Total: R$ <span id="total">0</span></h3>
@@ -62,11 +177,22 @@ button { background:#38bdf8; border:none; padding:8px; margin-top:5px; border-ra
 <option>Presencial</option>
 </select>
 
-<br><br>
-<input id="whats" placeholder="WhatsApp"><br><br>
-<input id="data" placeholder="Data"><br><br>
+<input id="whats" placeholder="WhatsApp">
+<input id="data" placeholder="Data (apenas presencial)">
 
-<button onclick="finalizar()">Finalizar</button>
+<button onclick="finalizar()">Finalizar Pedido</button>
+
+<button id="termosBtn" onclick="abrirTermos()">📜 Termos</button>
+
+</div>
+
+<!-- MODAL TERMOS -->
+<div id="modal">
+  <div id="modalContent">
+    <h2>📜 Termos de Uso</h2>
+    <p>Cole aqui os termos</p>
+    <button id="fechar" onclick="fecharTermos()">Fechar</button>
+  </div>
 </div>
 
 <script>
@@ -74,46 +200,47 @@ button { background:#38bdf8; border:none; padding:8px; margin-top:5px; border-ra
 let carrinho = [];
 let total = 0;
 
-// LOGIN SIMPLES (SEM FIREBASE)
-function entrar(){
-  document.getElementById("login").style.display="none";
-  document.getElementById("loja").style.display="block";
-}
-
-// ADD
 function add(nome, preco){
   carrinho.push({nome, preco});
   total += preco;
   atualizar();
 }
 
-// ATUALIZAR
 function atualizar(){
   let html = "";
+
   carrinho.forEach((item, i)=>{
     html += `
     <div class="item">
-      ${item.nome} - R$ ${item.preco}
+      <span>${item.nome} - R$ ${item.preco}</span>
       <button onclick="remover(${i})">❌</button>
     </div>`;
   });
+
   document.getElementById("itens").innerHTML = html;
   document.getElementById("total").innerText = total.toFixed(2);
 }
 
-// REMOVER
 function remover(i){
   total -= carrinho[i].preco;
   carrinho.splice(i,1);
   atualizar();
 }
 
-// FINALIZAR
 function finalizar(){
-  alert("Pedido enviado!\nTotal: R$ "+total.toFixed(2));
+  alert("Pedido enviado! Total: R$ "+total.toFixed(2));
   carrinho = [];
   total = 0;
   atualizar();
+}
+
+// TERMOS
+function abrirTermos(){
+  document.getElementById("modal").style.display="flex";
+}
+
+function fecharTermos(){
+  document.getElementById("modal").style.display="none";
 }
 
 </script>
