@@ -12,7 +12,6 @@ body {
   color:white;
 }
 
-/* HEADER */
 header {
   background:#020617;
   padding:20px;
@@ -21,7 +20,6 @@ header {
   border-bottom:2px solid #38bdf8;
 }
 
-/* GRID */
 .grid {
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
@@ -29,7 +27,6 @@ header {
   padding:20px;
 }
 
-/* PRODUTO */
 .produto {
   background:#020617;
   padding:15px;
@@ -56,7 +53,6 @@ header {
   font-size:18px;
 }
 
-/* BOTÃO */
 button {
   background:#38bdf8;
   border:none;
@@ -71,7 +67,6 @@ button:hover {
   background:#0ea5e9;
 }
 
-/* CARRINHO */
 #carrinho {
   position:fixed;
   right:0;
@@ -97,7 +92,6 @@ button:hover {
   justify-content:space-between;
 }
 
-/* INPUT */
 input, select {
   width:100%;
   padding:8px;
@@ -106,14 +100,12 @@ input, select {
   margin-top:5px;
 }
 
-/* BOTÃO TERMOS */
 #termosBtn {
   margin-top:10px;
   background:#1e293b;
 }
 
-/* MODAL TERMOS */
-#modal {
+#modal, #modalKit, #modalPix {
   display:none;
   position:fixed;
   top:0;
@@ -131,11 +123,6 @@ input, select {
   width:80%;
   max-width:600px;
   border-radius:10px;
-}
-
-#fechar {
-  margin-top:10px;
-  background:red;
 }
 </style>
 </head>
@@ -166,7 +153,6 @@ input, select {
 <div id="carrinho">
 
 <h2>🛒 Carrinho</h2>
-
 <div id="itens"></div>
 
 <h3>Total: R$ <span id="total">0</span></h3>
@@ -178,7 +164,7 @@ input, select {
 </select>
 
 <input id="whats" placeholder="WhatsApp">
-<input id="data" placeholder="Data (apenas presencial)">
+<input id="data" placeholder="Data (Apenas presencialmente)">
 
 <button onclick="finalizar()">Finalizar Pedido</button>
 
@@ -186,13 +172,63 @@ input, select {
 
 </div>
 
-<!-- MODAL TERMOS -->
+<!-- TERMOS -->
 <div id="modal">
-  <div id="modalContent">
-    <h2>📜 Termos de Uso</h2>
-    <p>Cole aqui os termos</p>
-    <button id="fechar" onclick="fecharTermos()">Fechar</button>
-  </div>
+<div id="modalContent">
+<h2>📜 Termos</h2>
+<p>Cole aqui os termos</p>
+<button onclick="fecharTermos()">Fechar</button>
+</div>
+</div>
+
+<!-- BOTÃO KIT -->
+<button onclick="abrirKit()" style="position:fixed;bottom:20px;left:20px;width:auto;padding:12px;">
+🧩 Montar meu Kit
+</button>
+
+<!-- MODAL KIT -->
+<div id="modalKit">
+<div style="background:#020617;padding:20px;border-radius:10px;width:300px;">
+<h3>Montar Kit</h3>
+
+<select id="kitCubo">
+<option value="">Cubo *</option>
+<option value="21.99">Básico</option>
+<option value="59.90">Magnético</option>
+</select>
+
+<select id="kitBag">
+<option value="">Bag *</option>
+<option value="10">Simples</option>
+<option value="20">Premium</option>
+</select>
+
+<select id="kitStand">
+<option value="">Stand *</option>
+<option value="5">Normal</option>
+<option value="10">Premium</option>
+</select>
+
+<label><input type="checkbox" id="kitLub"> Lub (+2)</label><br>
+<label><input type="checkbox" id="kitReg"> Reg (+2)</label>
+
+<button onclick="confirmarKit()">Adicionar</button>
+<button onclick="fecharKit()">Fechar</button>
+</div>
+</div>
+
+<!-- PIX -->
+<div id="modalPix">
+<div style="background:#020617;padding:20px;border-radius:10px;width:300px;text-align:center;">
+<h3>Pagamento PIX</h3>
+
+<img src="https://via.placeholder.com/200">
+
+<input id="pixCode" value="CHAVEPIX123456" readonly>
+<button onclick="copiarPix()">Copiar</button>
+
+<button onclick="fecharPix()">Fechar</button>
+</div>
 </div>
 
 <script>
@@ -227,20 +263,86 @@ function remover(i){
   atualizar();
 }
 
+// FINALIZAR
 function finalizar(){
-  alert("Pedido enviado! Total: R$ "+total.toFixed(2));
-  carrinho = [];
-  total = 0;
-  atualizar();
+
+let whats = document.getElementById("whats").value;
+let data = document.getElementById("data").value;
+let pagamento = document.getElementById("pagamento").value;
+
+if(carrinho.length === 0){
+alert("Carrinho vazio!");
+return;
+}
+
+if(data && !whats){
+alert("Preencha o WhatsApp!");
+return;
+}
+
+if(pagamento === "Pix"){
+document.getElementById("modalPix").style.display="flex";
+return;
+}
+
+alert("Pedido enviado! Total: R$ "+total.toFixed(2));
+
+carrinho = [];
+total = 0;
+atualizar();
 }
 
 // TERMOS
 function abrirTermos(){
-  document.getElementById("modal").style.display="flex";
+document.getElementById("modal").style.display="flex";
 }
 
 function fecharTermos(){
-  document.getElementById("modal").style.display="none";
+document.getElementById("modal").style.display="none";
+}
+
+// PIX
+function copiarPix(){
+let input = document.getElementById("pixCode");
+input.select();
+document.execCommand("copy");
+alert("Copiado!");
+}
+
+function fecharPix(){
+document.getElementById("modalPix").style.display="none";
+}
+
+// KIT
+function abrirKit(){
+document.getElementById("modalKit").style.display="flex";
+}
+
+function fecharKit(){
+document.getElementById("modalKit").style.display="none";
+}
+
+function confirmarKit(){
+
+let cubo = document.getElementById("kitCubo").value;
+let bag = document.getElementById("kitBag").value;
+let stand = document.getElementById("kitStand").value;
+
+if(!cubo || !bag || !stand){
+alert("Complete os obrigatórios!");
+return;
+}
+
+let totalKit = Number(cubo)+Number(bag)+Number(stand);
+
+if(document.getElementById("kitLub").checked) totalKit += 2;
+if(document.getElementById("kitReg").checked) totalKit += 2;
+
+totalKit *= 0.95;
+
+add("Kit", Number(totalKit.toFixed(2)));
+
+fecharKit();
 }
 
 </script>
