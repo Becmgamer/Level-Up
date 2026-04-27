@@ -147,6 +147,34 @@ input, select {
 <button onclick="add('Cubo Magnético',59.90)">Adicionar</button>
 </div>
 
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Bag Simples</h3>
+<p class="preco">R$10.00</p>
+<button onclick="add('Bag Simples',10)">Adicionar</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Stand Básico</h3>
+<p class="preco">R$5.00</p>
+<button onclick="add('Stand Básico',5)">Adicionar</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Lubrificação</h3>
+<p class="preco">R$2.00</p>
+<button onclick="add('Lubrificação',2)">Adicionar</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Regulagem</h3>
+<p class="preco">R$2.00</p>
+<button onclick="add('Regulagem',2)">Adicionar</button>
+</div>
+
 </div>
 
 <!-- CARRINHO -->
@@ -338,7 +366,14 @@ let totalKit = Number(cubo)+Number(bag)+Number(stand);
 if(document.getElementById("kitLub").checked) totalKit += 2;
 if(document.getElementById("kitReg").checked) totalKit += 2;
 
-totalKit *= 0.95;
+// DESCONTO SÓ SE TIVER OS 3 OBRIGATÓRIOS
+let temCubo = cubo !== "";
+let temBag = bag !== "";
+let temStand = stand !== "";
+
+if(temCubo && temBag && temStand){
+  totalKit *= 0.95;
+}
 
 add("Kit", Number(totalKit.toFixed(2)));
 
