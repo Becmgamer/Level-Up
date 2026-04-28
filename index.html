@@ -37,10 +37,7 @@ object-fit:cover;
 border-radius:10px;
 }
 
-.preco{
-color:#38bdf8;
-font-weight:bold;
-}
+.preco{color:#38bdf8;font-weight:bold;}
 
 button{
 background:#38bdf8;
@@ -122,7 +119,7 @@ background:#1e293b;
 <div class="grid">
 
 <div class="produto">
-<img src="https://images.tcdn.com.br/img/img_prod/882922/cubo_magico_3x3x3_moyu_meilong_color_82166132_1_85157428f5bee793492f221aab72bf8f.jpg">
+<img src="coloqueseulinkaq">
 <h3>Cubo Básico</h3>
 <p class="preco">R$21.99</p>
 <button onclick="verProduto('basico')">Ver</button>
@@ -130,7 +127,7 @@ background:#1e293b;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300">
+<img src="coloqueseulinkaq">
 <h3>Cubo Magnético</h3>
 <p class="preco">R$59.90</p>
 <button onclick="verProduto('magnetico')">Ver</button>
@@ -138,7 +135,7 @@ background:#1e293b;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300">
+<img src="coloqueseulinkaq">
 <h3>Bag Simples</h3>
 <p class="preco">R$10</p>
 <button onclick="verProduto('bag')">Ver</button>
@@ -146,7 +143,7 @@ background:#1e293b;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300">
+<img src="coloqueseulinkaq">
 <h3>Bag Premium</h3>
 <p class="preco">R$20</p>
 <button onclick="verProduto('bagp')">Ver</button>
@@ -154,7 +151,7 @@ background:#1e293b;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300">
+<img src="coloqueseulinkaq">
 <h3>Stand Básico</h3>
 <p class="preco">R$5</p>
 <button onclick="verProduto('stand')">Ver</button>
@@ -162,7 +159,7 @@ background:#1e293b;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300">
+<img src="coloqueseulinkaq">
 <h3>Stand Premium</h3>
 <p class="preco">R$10</p>
 <button onclick="verProduto('standp')">Ver</button>
@@ -170,7 +167,7 @@ background:#1e293b;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300">
+<img src="coloqueseulinkaq">
 <h3>Lubrificante</h3>
 <p class="preco">R$2</p>
 <button onclick="verProduto('lub')">Ver</button>
@@ -293,15 +290,11 @@ total=0;
 atualizar();
 }
 
-function verProduto(tipo){
-
-let html="";
-
-function bloco(nome, preco, desc){
+function bloco(nome, preco, desc, img){
 return `
 <div style="display:flex;gap:20px;flex-wrap:wrap;">
 <div style="flex:1;min-width:250px;">
-<img src="https://images.tcdn.com.br/img/img_prod/882922/cubo_magico_3x3x3_moyu_meilong_color_82166132_1_85157428f5bee793492f221aab72bf8f.jpg" style="width:100%;border-radius:10px;">
+<img src="${img}" style="width:100%;border-radius:10px;">
 <p>${desc}</p>
 </div>
 
@@ -309,7 +302,7 @@ return `
 <h2>${nome}</h2>
 <h3>R$${preco}</h3>
 
-<img src="coloqueseulinkaq" style="width:100%;max-width:200px;border-radius:10px;margin-bottom:10px;">
+<img src="${img}" style="width:100%;max-width:200px;border-radius:10px;margin-bottom:10px;">
 
 <button onclick="comprarDireto('${nome}',${preco})">Comprar</button>
 <button onclick="add('${nome}',${preco})">Adicionar</button>
@@ -317,13 +310,17 @@ return `
 </div>`;
 }
 
-if(tipo==="basico") html=bloco("Cubo Básico",21.99,"Ótimo para iniciantes.");
-if(tipo==="magnetico") html=bloco("Cubo Magnético",59.90,"Alta performance.");
-if(tipo==="bag") html=bloco("Bag Simples",10,"Protege seu cubo.");
-if(tipo==="bagp") html=bloco("Bag Premium",20,"Mais proteção.");
-if(tipo==="stand") html=bloco("Stand Básico",5,"Exibição simples.");
-if(tipo==="standp") html=bloco("Stand Premium",10,"Mais resistente.");
-if(tipo==="lub") html=bloco("Lubrificante",2,"Deixa mais rápido.");
+function verProduto(tipo){
+
+let html="";
+
+if(tipo==="basico") html=bloco("Cubo Básico",21.99,"Ótimo para iniciantes.","coloqueseulinkaq");
+if(tipo==="magnetico") html=bloco("Cubo Magnético",59.90,"Alta performance.","coloqueseulinkaq");
+if(tipo==="bag") html=bloco("Bag Simples",10,"Protege seu cubo.","coloqueseulinkaq");
+if(tipo==="bagp") html=bloco("Bag Premium",20,"Mais proteção.","coloqueseulinkaq");
+if(tipo==="stand") html=bloco("Stand Básico",5,"Exibição simples.","coloqueseulinkaq");
+if(tipo==="standp") html=bloco("Stand Premium",10,"Mais resistente.","coloqueseulinkaq");
+if(tipo==="lub") html=bloco("Lubrificante",2,"Deixa mais rápido.","coloqueseulinkaq");
 
 document.getElementById("produtoInfo").innerHTML=html;
 ir("produto");
