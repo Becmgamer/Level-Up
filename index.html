@@ -6,14 +6,8 @@
 <title>Level Up Cubos</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#0f172a;
-color:white;
-}
+body{margin:0;font-family:Arial;background:#0f172a;color:white;}
 
-/* HEADER */
 header{
 background:#020617;
 padding:15px;
@@ -22,7 +16,6 @@ font-size:20px;
 border-bottom:2px solid #38bdf8;
 }
 
-/* GRID */
 .grid{
 display:grid;
 grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
@@ -49,7 +42,6 @@ color:#38bdf8;
 font-weight:bold;
 }
 
-/* BOTÕES */
 button{
 background:#38bdf8;
 border:none;
@@ -59,7 +51,6 @@ margin-top:5px;
 cursor:pointer;
 }
 
-/* CARRINHO LATERAL */
 #carrinho{
 position:fixed;
 right:-100%;
@@ -74,14 +65,9 @@ flex-direction:column;
 z-index:1000;
 }
 
-#carrinho.ativo{
-right:0;
-}
+#carrinho.ativo{right:0;}
 
-#itens{
-flex:1;
-overflow:auto;
-}
+#itens{flex:1;overflow:auto;}
 
 .item{
 display:flex;
@@ -89,17 +75,14 @@ justify-content:space-between;
 margin-bottom:5px;
 }
 
-/* BOTÃO CARRINHO */
 #btnCarrinho{
 position:fixed;
 top:15px;
 right:15px;
-background:#38bdf8;
 padding:10px;
 border-radius:10px;
 }
 
-/* BOTÃO KIT */
 #btnKit{
 position:fixed;
 bottom:20px;
@@ -109,16 +92,9 @@ padding:12px;
 border-radius:10px;
 }
 
-/* PÁGINAS */
-.pagina{
-display:none;
-padding:10px;
-}
-.ativa{
-display:block;
-}
+.pagina{display:none;padding:10px;}
+.ativa{display:block;}
 
-/* INPUT */
 input,select{
 width:100%;
 padding:6px;
@@ -127,7 +103,6 @@ border-radius:6px;
 border:none;
 }
 
-/* VOLTAR */
 .voltar{
 margin-bottom:10px;
 background:#1e293b;
@@ -144,7 +119,6 @@ background:#1e293b;
 
 <!-- CATÁLOGO -->
 <div id="catalogo" class="pagina ativa">
-
 <div class="grid">
 
 <div class="produto">
@@ -163,26 +137,60 @@ background:#1e293b;
 <button onclick="add('Cubo Magnético',59.90)">Adicionar</button>
 </div>
 
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Bag Simples</h3>
+<p class="preco">R$10</p>
+<button onclick="verProduto('bag')">Ver</button>
+<button onclick="add('Bag Simples',10)">Adicionar</button>
 </div>
 
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Bag Premium</h3>
+<p class="preco">R$20</p>
+<button onclick="verProduto('bagp')">Ver</button>
+<button onclick="add('Bag Premium',20)">Adicionar</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Stand Básico</h3>
+<p class="preco">R$5</p>
+<button onclick="verProduto('stand')">Ver</button>
+<button onclick="add('Stand Básico',5)">Adicionar</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Stand Premium</h3>
+<p class="preco">R$10</p>
+<button onclick="verProduto('standp')">Ver</button>
+<button onclick="add('Stand Premium',10)">Adicionar</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300">
+<h3>Lubrificante</h3>
+<p class="preco">R$2</p>
+<button onclick="verProduto('lub')">Ver</button>
+<button onclick="add('Lubrificante',2)">Adicionar</button>
+</div>
+
+</div>
 </div>
 
 <!-- PÁGINA PRODUTO -->
 <div id="produto" class="pagina">
-
 <button class="voltar" onclick="ir('catalogo')">⬅ Voltar</button>
-
 <div id="produtoInfo"></div>
-
 </div>
 
 <!-- CARRINHO -->
 <div id="carrinho">
-
 <button onclick="toggleCarrinho()">❌ Fechar</button>
 
 <h2>🛒 Carrinho</h2>
-
 <div id="itens"></div>
 
 <h3>Total: R$ <span id="total">0</span></h3>
@@ -195,12 +203,10 @@ background:#1e293b;
 <input id="whats" placeholder="WhatsApp">
 
 <button onclick="finalizar()">Finalizar</button>
-
 </div>
 
-<!-- KIT MODAL -->
+<!-- KIT -->
 <div id="modalKit" class="pagina">
-
 <button class="voltar" onclick="fecharKit()">⬅ Voltar</button>
 
 <h2>Montar Kit</h2>
@@ -226,7 +232,6 @@ background:#1e293b;
 <label><input type="checkbox" id="kitLub"> Lub (+2)</label>
 
 <button onclick="confirmarKit()">Adicionar Kit</button>
-
 </div>
 
 <script>
@@ -234,55 +239,28 @@ background:#1e293b;
 let carrinho=[];
 let total=0;
 
-/* NAVEGAÇÃO */
 function ir(p){
 document.querySelectorAll(".pagina").forEach(e=>e.classList.remove("ativa"));
 document.getElementById(p).classList.add("ativa");
 }
 
-/* PRODUTO DETALHE */
-function verProduto(tipo){
-
-let html="";
-
-if(tipo==="basico"){
-html=`
-<img src="https://via.placeholder.com/300" style="width:100%">
-<h2>Cubo Básico</h2>
-<p>Ótimo para iniciantes.</p>
-<p>R$21.99</p>
-<button onclick="add('Cubo Básico',21.99)">Adicionar</button>
-`;
-}
-
-if(tipo==="magnetico"){
-html=`
-<img src="https://via.placeholder.com/300" style="width:100%">
-<h2>Cubo Magnético</h2>
-<p>Alta performance.</p>
-<p>R$59.90</p>
-<button onclick="add('Cubo Magnético',59.90)">Adicionar</button>
-`;
-}
-
-document.getElementById("produtoInfo").innerHTML=html;
-
-ir("produto");
-}
-
-/* CARRINHO */
 function toggleCarrinho(){
 document.getElementById("carrinho").classList.toggle("ativo");
 }
 
-/* ADD */
 function add(n,p){
 carrinho.push({n,p});
 total+=p;
 atualizar();
 }
 
-/* ATUALIZAR */
+function comprarDireto(n,p){
+carrinho=[{n,p}];
+total=p;
+atualizar();
+toggleCarrinho();
+}
+
 function atualizar(){
 let html="";
 carrinho.forEach((item,i)=>{
@@ -297,27 +275,17 @@ document.getElementById("itens").innerHTML=html;
 document.getElementById("total").innerText=total.toFixed(2);
 }
 
-/* REMOVER */
 function remover(i){
 total-=carrinho[i].p;
 carrinho.splice(i,1);
 atualizar();
 }
 
-/* FINALIZAR */
 function finalizar(){
-
 let whats=document.getElementById("whats").value;
 
-if(carrinho.length==0){
-alert("Carrinho vazio!");
-return;
-}
-
-if(!whats){
-alert("Preencha o WhatsApp!");
-return;
-}
+if(carrinho.length==0){alert("Carrinho vazio!");return;}
+if(!whats){alert("Preencha o WhatsApp!");return;}
 
 alert("Pedido enviado!");
 carrinho=[];
@@ -325,17 +293,43 @@ total=0;
 atualizar();
 }
 
-/* KIT */
-function abrirKit(){
-ir("modalKit");
+function verProduto(tipo){
+
+let html="";
+
+function bloco(nome, preco, desc){
+return `
+<div style="display:flex;gap:20px;flex-wrap:wrap;">
+<div style="flex:1;min-width:250px;">
+<img src="https://via.placeholder.com/400" style="width:100%;border-radius:10px;">
+<p>${desc}</p>
+</div>
+
+<div style="flex:1;min-width:200px;">
+<h2>${nome}</h2>
+<h3>R$${preco}</h3>
+<button onclick="comprarDireto('${nome}',${preco})">Comprar</button>
+<button onclick="add('${nome}',${preco})">Adicionar</button>
+</div>
+</div>`;
 }
 
-function fecharKit(){
-ir("catalogo");
+if(tipo==="basico") html=bloco("Cubo Básico",21.99,"Ótimo para iniciantes.");
+if(tipo==="magnetico") html=bloco("Cubo Magnético",59.90,"Alta performance.");
+if(tipo==="bag") html=bloco("Bag Simples",10,"Protege seu cubo.");
+if(tipo==="bagp") html=bloco("Bag Premium",20,"Mais proteção.");
+if(tipo==="stand") html=bloco("Stand Básico",5,"Exibição simples.");
+if(tipo==="standp") html=bloco("Stand Premium",10,"Mais resistente.");
+if(tipo==="lub") html=bloco("Lubrificante",2,"Deixa mais rápido.");
+
+document.getElementById("produtoInfo").innerHTML=html;
+ir("produto");
 }
+
+function abrirKit(){ir("modalKit");}
+function fecharKit(){ir("catalogo");}
 
 function confirmarKit(){
-
 let c=document.getElementById("kitCubo").value;
 let b=document.getElementById("kitBag").value;
 let s=document.getElementById("kitStand").value;
@@ -346,15 +340,12 @@ return;
 }
 
 let totalKit=Number(c)+Number(b)+Number(s);
-
 if(document.getElementById("kitLub").checked) totalKit+=2;
 
 totalKit*=0.95;
 
 add("Kit Completo",Number(totalKit.toFixed(2)));
-
 alert("Kit com desconto adicionado!");
-
 ir("catalogo");
 }
 
