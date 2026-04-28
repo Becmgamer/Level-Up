@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Level Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level Up Cubos</title>
 
 <style>
 body {
@@ -12,72 +13,78 @@ body {
   color:white;
 }
 
+/* HEADER */
 header {
   background:#020617;
-  padding:20px;
+  padding:15px;
   text-align:center;
-  font-size:24px;
+  font-size:20px;
   border-bottom:2px solid #38bdf8;
 }
 
+/* GRID MOBILE */
 .grid {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-  gap:20px;
-  padding:20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  padding:12px;
 }
 
 .produto {
   background:#020617;
-  padding:15px;
-  border-radius:15px;
-  transition:0.3s;
-  box-shadow:0 0 10px rgba(0,0,0,0.5);
-}
-
-.produto:hover {
-  transform:scale(1.03);
-  box-shadow:0 0 15px #38bdf8;
+  padding:10px;
+  border-radius:12px;
 }
 
 .produto img {
   width:100%;
-  height:150px;
+  height:120px;
   object-fit:cover;
-  border-radius:10px;
+  border-radius:8px;
 }
 
 .preco {
   color:#38bdf8;
   font-weight:bold;
-  font-size:18px;
 }
 
 button {
   background:#38bdf8;
   border:none;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
+  padding:8px;
+  border-radius:6px;
   width:100%;
-  margin-top:10px;
+  margin-top:5px;
 }
 
-button:hover {
-  background:#0ea5e9;
+/* BOTÃO CARRINHO */
+#btnCarrinho {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#38bdf8;
+  padding:15px;
+  border-radius:50%;
+  font-size:18px;
 }
 
+/* CARRINHO (ESCONDIDO) */
 #carrinho {
   position:fixed;
-  right:0;
+  right:-100%;
   top:0;
-  width:320px;
+  width:85%;
+  max-width:320px;
   height:100%;
   background:#020617;
   padding:15px;
-  border-left:2px solid #38bdf8;
+  transition:0.3s;
   display:flex;
   flex-direction:column;
+}
+
+#carrinho.ativo {
+  right:0;
 }
 
 #itens {
@@ -87,176 +94,101 @@ button:hover {
 
 .item {
   border-bottom:1px solid #333;
-  padding:8px 0;
+  padding:6px 0;
   display:flex;
   justify-content:space-between;
 }
 
 input, select {
   width:100%;
-  padding:8px;
+  padding:6px;
+  margin-top:5px;
   border-radius:6px;
   border:none;
-  margin-top:5px;
 }
 
-#termosBtn {
-  margin-top:10px;
-  background:#1e293b;
-}
-
-#modal, #modalKit, #modalPix {
+/* OVERLAY */
+#overlay {
   display:none;
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.8);
-  justify-content:center;
-  align-items:center;
+  background:rgba(0,0,0,0.6);
 }
 
-#modalContent {
-  background:#020617;
-  padding:20px;
-  width:80%;
-  max-width:600px;
-  border-radius:10px;
+#overlay.ativo {
+  display:block;
 }
 </style>
 </head>
 
 <body>
 
-<header>🔥 Level Up</header>
+<header>🔥 Level Up Cubos</header>
 
 <div class="grid">
 
 <div class="produto">
 <img src="https://via.placeholder.com/300">
-<h3>Cubo Básico</h3>
+<h4>Cubo Básico</h4>
 <p class="preco">R$21.99</p>
-<button onclick="add('Cubo Básico',21.99)">Adicionar</button>
+<button onclick="add('Cubo Básico',21.99)">+</button>
 </div>
 
 <div class="produto">
 <img src="https://via.placeholder.com/300">
-<h3>Cubo Magnético</h3>
+<h4>Cubo Magnético</h4>
 <p class="preco">R$59.90</p>
-<button onclick="add('Cubo Magnético',59.90)">Adicionar</button>
+<button onclick="add('Cubo Magnético',59.90)">+</button>
 </div>
 
 <div class="produto">
 <img src="https://via.placeholder.com/300">
-<h3>Bag Simples</h3>
-<p class="preco">R$10.00</p>
-<button onclick="add('Bag Simples',10)">Adicionar</button>
+<h4>Bag Premium</h4>
+<p class="preco">R$20</p>
+<button onclick="add('Bag Premium',20)">+</button>
 </div>
 
 <div class="produto">
 <img src="https://via.placeholder.com/300">
-<h3>Stand Básico</h3>
-<p class="preco">R$5.00</p>
-<button onclick="add('Stand Básico',5)">Adicionar</button>
+<h4>Stand Premium</h4>
+<p class="preco">R$10</p>
+<button onclick="add('Stand Premium',10)">+</button>
 </div>
 
 <div class="produto">
 <img src="https://via.placeholder.com/300">
-<h3>Lubrificação</h3>
-<p class="preco">R$2.00</p>
-<button onclick="add('Lubrificação',2)">Adicionar</button>
-</div>
-
-<div class="produto">
-<img src="https://via.placeholder.com/300">
-<h3>Regulagem</h3>
-<p class="preco">R$2.00</p>
-<button onclick="add('Regulagem',2)">Adicionar</button>
+<h4>Lubrificante</h4>
+<p class="preco">R$2</p>
+<button onclick="add('Lubrificante',2)">+</button>
 </div>
 
 </div>
+
+<!-- BOTÃO -->
+<div id="btnCarrinho" onclick="abrirCarrinho()">🛒</div>
+
+<div id="overlay" onclick="fecharCarrinho()"></div>
 
 <!-- CARRINHO -->
 <div id="carrinho">
 
 <h2>🛒 Carrinho</h2>
+
 <div id="itens"></div>
 
 <h3>Total: R$ <span id="total">0</span></h3>
 
-<h3>Pagamento</h3>
 <select id="pagamento">
 <option>Pix</option>
 <option>Presencial</option>
 </select>
 
 <input id="whats" placeholder="WhatsApp">
-<input id="data" placeholder="Data (Apenas presencialmente)">
+<input id="data" placeholder="Data (Presencial)">
 
-<button onclick="finalizar()">Finalizar Pedido</button>
+<button onclick="finalizar()">Finalizar</button>
 
-<button id="termosBtn" onclick="abrirTermos()">📜 Termos</button>
-
-</div>
-
-<!-- TERMOS -->
-<div id="modal">
-<div id="modalContent">
-<h2>📜 Termos</h2>
-<p>Cole aqui os termos</p>
-<button onclick="fecharTermos()">Fechar</button>
-</div>
-</div>
-
-<!-- BOTÃO KIT -->
-<button onclick="abrirKit()" style="position:fixed;bottom:20px;left:20px;width:auto;padding:12px;">
-🧩 Montar meu Kit
-</button>
-
-<!-- MODAL KIT -->
-<div id="modalKit">
-<div style="background:#020617;padding:20px;border-radius:10px;width:300px;">
-<h3>Montar Kit</h3>
-
-<select id="kitCubo">
-<option value="">Cubo *</option>
-<option value="21.99">Básico</option>
-<option value="59.90">Magnético</option>
-</select>
-
-<select id="kitBag">
-<option value="">Bag *</option>
-<option value="10">Simples</option>
-<option value="20">Premium</option>
-</select>
-
-<select id="kitStand">
-<option value="">Stand *</option>
-<option value="5">Normal</option>
-<option value="10">Premium</option>
-</select>
-
-<label><input type="checkbox" id="kitLub"> Lub (+2)</label><br>
-<label><input type="checkbox" id="kitReg"> Reg (+2)</label>
-
-<button onclick="confirmarKit()">Adicionar</button>
-<button onclick="fecharKit()">Fechar</button>
-</div>
-</div>
-
-<!-- PIX -->
-<div id="modalPix">
-<div style="background:#020617;padding:20px;border-radius:10px;width:300px;text-align:center;">
-<h3>Pagamento PIX</h3>
-
-<img src="https://via.placeholder.com/200">
-
-<input id="pixCode" value="bernardmachado14@gmail.com" readonly>
-<button onclick="copiarPix()">Copiar</button>
-
-<button onclick="fecharPix()">Fechar</button>
-</div>
 </div>
 
 <script>
@@ -276,7 +208,7 @@ function atualizar(){
   carrinho.forEach((item, i)=>{
     html += `
     <div class="item">
-      <span>${item.nome} - R$ ${item.preco}</span>
+      <span>${item.nome}</span>
       <button onclick="remover(${i})">❌</button>
     </div>`;
   });
@@ -291,93 +223,27 @@ function remover(i){
   atualizar();
 }
 
-// FINALIZAR
+function abrirCarrinho(){
+  document.getElementById("carrinho").classList.add("ativo");
+  document.getElementById("overlay").classList.add("ativo");
+}
+
+function fecharCarrinho(){
+  document.getElementById("carrinho").classList.remove("ativo");
+  document.getElementById("overlay").classList.remove("ativo");
+}
+
 function finalizar(){
+  if(carrinho.length === 0){
+    alert("Carrinho vazio!");
+    return;
+  }
 
-let whats = document.getElementById("whats").value;
-let data = document.getElementById("data").value;
-let pagamento = document.getElementById("pagamento").value;
+  alert("Pedido enviado! R$ " + total.toFixed(2));
 
-if(carrinho.length === 0){
-alert("Carrinho vazio!");
-return;
-}
-
-if(data && !whats){
-alert("Preencha o WhatsApp!");
-return;
-}
-
-if(pagamento === "Pix"){
-document.getElementById("modalPix").style.display="flex";
-return;
-}
-
-alert("Pedido enviado! Total: R$ "+total.toFixed(2));
-
-carrinho = [];
-total = 0;
-atualizar();
-}
-
-// TERMOS
-function abrirTermos(){
-document.getElementById("modal").style.display="flex";
-}
-
-function fecharTermos(){
-document.getElementById("modal").style.display="none";
-}
-
-// PIX
-function copiarPix(){
-let input = document.getElementById("pixCode");
-input.select();
-document.execCommand("copy");
-alert("Copiado!");
-}
-
-function fecharPix(){
-document.getElementById("modalPix").style.display="none";
-}
-
-// KIT
-function abrirKit(){
-document.getElementById("modalKit").style.display="flex";
-}
-
-function fecharKit(){
-document.getElementById("modalKit").style.display="none";
-}
-
-function confirmarKit(){
-
-let cubo = document.getElementById("kitCubo").value;
-let bag = document.getElementById("kitBag").value;
-let stand = document.getElementById("kitStand").value;
-
-if(!cubo || !bag || !stand){
-alert("Complete os obrigatórios!");
-return;
-}
-
-let totalKit = Number(cubo)+Number(bag)+Number(stand);
-
-if(document.getElementById("kitLub").checked) totalKit += 2;
-if(document.getElementById("kitReg").checked) totalKit += 2;
-
-// DESCONTO SÓ SE TIVER OS 3 OBRIGATÓRIOS
-let temCubo = cubo !== "";
-let temBag = bag !== "";
-let temStand = stand !== "";
-
-if(temCubo && temBag && temStand){
-  totalKit *= 0.95;
-}
-
-add("Kit", Number(totalKit.toFixed(2)));
-
-fecharKit();
+  carrinho = [];
+  total = 0;
+  atualizar();
 }
 
 </script>
