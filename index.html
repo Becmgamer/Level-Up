@@ -122,7 +122,7 @@ background:#1e293b;
 <div class="grid">
 
 <div class="produto">
-<img src="https://images.tcdn.com.br/img/img_prod/882922/cubo_magico_3x3x3_moyu_meilong_color_82166132_1_85157428f5bee793492f221aab72bf8f.jpg">
+<img src="https://via.placeholder.com/300">
 <h3>Cubo Básico</h3>
 <p class="preco">R$21.99</p>
 <button onclick="verProduto('basico')">Ver</button>
@@ -308,15 +308,16 @@ return `
 <div style="flex:1;min-width:200px;">
 <h2>${nome}</h2>
 <h3>R$${preco}</h3>
+
+<img src="coloqueseulinkaq" style="width:100%;max-width:200px;border-radius:10px;margin-bottom:10px;">
+
 <button onclick="comprarDireto('${nome}',${preco})">Comprar</button>
 <button onclick="add('${nome}',${preco})">Adicionar</button>
 </div>
 </div>`;
 }
 
-if(tipo==="basico")<img src="https://images.tcdn.com.br/img/img_prod/882922/cubo_magico_3x3x3_moyu_meilong_color_82166132_1_85157428f5bee793492f221aab72bf8f.jpg"> html=bloco("Cubo Básico",21.99,"Ótimo para iniciantes.");
 if(tipo==="basico") html=bloco("Cubo Básico",21.99,"Ótimo para iniciantes.");
-if(tipo==="basico")html=bloco("Cubo Básico",21.99,"Ótimo para iniciantes.");
 if(tipo==="magnetico") html=bloco("Cubo Magnético",59.90,"Alta performance.");
 if(tipo==="bag") html=bloco("Bag Simples",10,"Protege seu cubo.");
 if(tipo==="bagp") html=bloco("Bag Premium",20,"Mais proteção.");
