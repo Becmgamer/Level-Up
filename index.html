@@ -152,7 +152,6 @@ border:none;
 <button onclick="add('Lubrificante',2)">+</button>
 </div>
 
-<!-- NOVOS PRODUTOS -->
 <div class="produto">
 <img src="https://via.placeholder.com/300?text=Produto+1">
 <h3>Produto Ex 1</h3>
@@ -288,25 +287,31 @@ mag:["Cubo Magnético",59.90,"Alta performance","https://via.placeholder.com/400
 bag:["Bag",10,"Proteção","https://via.placeholder.com/400?text=Bag"],
 stand:["Stand",5,"Exibição","https://via.placeholder.com/400?text=Stand"],
 lub:["Lubrificante",2,"Mais rápido","https://via.placeholder.com/400?text=Lubrificante"],
-
 p1:["Produto Ex 1",15,"Descrição exemplo 1","https://via.placeholder.com/400?text=Produto+1"],
 p2:["Produto Ex 2",25,"Descrição exemplo 2","https://via.placeholder.com/400?text=Produto+2"],
 p3:["Produto Ex 3",35,"Descrição exemplo 3","https://via.placeholder.com/400?text=Produto+3"]
 };
 
 info.innerHTML=`
-<div style="display:flex;flex-direction:column;align-items:center;">
+<div style="display:flex;flex-direction:column;gap:10px;">
 
-<img src="${d[t][3]}" style="width:100%;max-width:250px;border-radius:10px;">
+<div style="display:flex;gap:15px;align-items:center;">
 
-<p style="margin-top:10px;text-align:center;">${d[t][2]}</p>
+<img src="${d[t][3]}" style="width:120px;height:120px;object-fit:cover;border-radius:10px;">
 
-<div style="display:flex;gap:10px;margin-top:10px;">
+<div style="display:flex;flex-direction:column;gap:8px;flex:1;">
+
+<h3>${d[t][0]}</h3>
+<h3 style="color:#38bdf8;">R$${d[t][1]}</h3>
+
 <button onclick="add('${d[t][0]}',${d[t][1]})">Adicionar</button>
 <button onclick="toggleCarrinho()">Comprar</button>
+
 </div>
 
-<h3 style="margin-top:10px;">R$${d[t][1]}</h3>
+</div>
+
+<p>${d[t][2]}</p>
 
 </div>
 `;
