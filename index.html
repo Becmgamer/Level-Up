@@ -129,7 +129,7 @@ border:none;
 </div>
 
 <div class="produto">
-<img src="https://via.placeholder.com/300?text=Bag+Simples">
+<img src="https://via.placeholder.com/300?text=Bag">
 <h3>Bag</h3>
 <p class="preco">R$10</p>
 <button onclick="ver('bag')">Ver</button>
@@ -256,16 +256,17 @@ update();
 }
 
 function ver(t){
+
 let d={
-basico:["Cubo Básico",21.99,"Bom para iniciantes"],
-mag:["Cubo Magnético",59.90,"Alta performance"],
-bag:["Bag",10,"Proteção"],
-stand:["Stand",5,"Exibição"],
-lub:["Lubrificante",2,"Mais rápido"]
+basico:["Cubo Básico",21.99,"Ótimo para iniciantes","https://images.tcdn.com.br/img/img_prod/882922/cubo_magico_3x3x3_moyu_meilong_color_82166132_1_85157428f5bee793492f221aab72bf8f.jpg"],
+mag:["Cubo Magnético",59.90,"Alta performance","https://via.placeholder.com/400?text=Cubo+Magnetico"],
+bag:["Bag",10,"Proteção","https://via.placeholder.com/400?text=Bag"],
+stand:["Stand",5,"Exibição","https://via.placeholder.com/400?text=Stand"],
+lub:["Lubrificante",2,"Mais rápido","https://via.placeholder.com/400?text=Lubrificante"]
 };
 
 info.innerHTML=`
-<img src="https://via.placeholder.com/400" style="width:100%;border-radius:10px;">
+<img src="${d[t][3]}" style="width:100%;border-radius:10px;">
 <h2>${d[t][0]}</h2>
 <p>${d[t][2]}</p>
 <h3>R$${d[t][1]}</h3>
@@ -280,9 +281,11 @@ function abrirKit(){ir("kit");}
 
 function addKit(){
 let c=cubo.value,b=bag.value,s=stand.value;
+
 if(!c||!b||!s)return alert("Complete o kit");
 
 let t=Number(c)+Number(b)+Number(s);
+
 if(lub.checked)t+=2;
 
 t*=0.95;
