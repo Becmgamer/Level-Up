@@ -152,6 +152,31 @@ border:none;
 <button onclick="add('Lubrificante',2)">+</button>
 </div>
 
+<!-- NOVOS PRODUTOS -->
+<div class="produto">
+<img src="https://via.placeholder.com/300?text=Produto+1">
+<h3>Produto Ex 1</h3>
+<p class="preco">R$15</p>
+<button onclick="ver('p1')">Ver</button>
+<button onclick="add('Produto Ex 1',15)">+</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300?text=Produto+2">
+<h3>Produto Ex 2</h3>
+<p class="preco">R$25</p>
+<button onclick="ver('p2')">Ver</button>
+<button onclick="add('Produto Ex 2',25)">+</button>
+</div>
+
+<div class="produto">
+<img src="https://via.placeholder.com/300?text=Produto+3">
+<h3>Produto Ex 3</h3>
+<p class="preco">R$35</p>
+<button onclick="ver('p3')">Ver</button>
+<button onclick="add('Produto Ex 3',35)">+</button>
+</div>
+
 </div>
 </div>
 
@@ -262,16 +287,28 @@ basico:["Cubo Básico",21.99,"Ótimo para iniciantes","https://images.tcdn.com.b
 mag:["Cubo Magnético",59.90,"Alta performance","https://via.placeholder.com/400?text=Cubo+Magnetico"],
 bag:["Bag",10,"Proteção","https://via.placeholder.com/400?text=Bag"],
 stand:["Stand",5,"Exibição","https://via.placeholder.com/400?text=Stand"],
-lub:["Lubrificante",2,"Mais rápido","https://via.placeholder.com/400?text=Lubrificante"]
+lub:["Lubrificante",2,"Mais rápido","https://via.placeholder.com/400?text=Lubrificante"],
+
+p1:["Produto Ex 1",15,"Descrição exemplo 1","https://via.placeholder.com/400?text=Produto+1"],
+p2:["Produto Ex 2",25,"Descrição exemplo 2","https://via.placeholder.com/400?text=Produto+2"],
+p3:["Produto Ex 3",35,"Descrição exemplo 3","https://via.placeholder.com/400?text=Produto+3"]
 };
 
 info.innerHTML=`
-<img src="${d[t][3]}" style="width:100%;max-width:300px;border-radius:10px;display:block;margin:auto;">
-<h2>${d[t][0]}</h2>
-<p>${d[t][2]}</p>
-<h3>R$${d[t][1]}</h3>
+<div style="display:flex;flex-direction:column;align-items:center;">
+
+<img src="${d[t][3]}" style="width:100%;max-width:250px;border-radius:10px;">
+
+<p style="margin-top:10px;text-align:center;">${d[t][2]}</p>
+
+<div style="display:flex;gap:10px;margin-top:10px;">
 <button onclick="add('${d[t][0]}',${d[t][1]})">Adicionar</button>
 <button onclick="toggleCarrinho()">Comprar</button>
+</div>
+
+<h3 style="margin-top:10px;">R$${d[t][1]}</h3>
+
+</div>
 `;
 
 ir("produto");
